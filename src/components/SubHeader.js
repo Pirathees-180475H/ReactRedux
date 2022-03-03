@@ -11,7 +11,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-const subHeader = ({subSystemName,subHeaderTopics}) => {
+const subHeader = ({mainSystem,subSystemName,subHeaderTopics}) => {
     
   return (
     <div>
@@ -20,8 +20,8 @@ const subHeader = ({subSystemName,subHeaderTopics}) => {
     expand="md"
     light
   >
-    <NavbarBrand href="/">
-      {subSystemName}
+    <NavbarBrand>
+      <Link to={`/${mainSystem}/${subSystemName}`}>  {subSystemName}</Link>
     </NavbarBrand>
     <NavbarToggler onClick={function noRefCheck(){}} />
     <Collapse navbar>
@@ -32,10 +32,8 @@ const subHeader = ({subSystemName,subHeaderTopics}) => {
         {subHeaderTopics.map(subTopic=>{
           return(
             <NavItem key={subTopic}>
-            <NavLink href={`/component/`+subTopic}>
-              {subTopic}
-            </NavLink>
-          </NavItem>
+              <Link to={`/${mainSystem}/${subSystemName}/${subTopic}`}>{`${subTopic}..`}</Link>
+            </NavItem>
           )
         })}
      

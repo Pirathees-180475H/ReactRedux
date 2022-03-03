@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,NavbarText,
@@ -8,8 +9,6 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-
-import { Link } from "react-router-dom";
 
 const Topbar = ({userName,userType,headerTopics}) => {
 
@@ -34,8 +33,8 @@ const Topbar = ({userName,userType,headerTopics}) => {
         {navTopics.map(topic=>{
           return(
           <NavItem key={topic}>
-            <NavLink href={`/component/`+topic}>
-              {topic}
+            <NavLink>           
+               <Link to={`/${userType}Page/${topic}`}>{topic}</Link>
             </NavLink>
           </NavItem>
           )
