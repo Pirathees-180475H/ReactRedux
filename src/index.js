@@ -4,16 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-//Redux Code
+//Redux Imports
+import {configureStore} from '@reduxjs/toolkit';
+import {Provider} from "react-redux";
+
+//Reducers
+import hospitalReducers from "./Features/HospitalsReducers";
+
+const store=configureStore({   // System All State Handler
+  reducer:{              
+    hospitals:hospitalReducers
+  }                    
+})
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
 reportWebVitals();
