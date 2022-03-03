@@ -6,17 +6,20 @@ import ViewHospitals from './ViewHospitals';
 import {useSelector} from "react-redux";
 import AddHospital from './AddHospital';
 
+//Import Router
+import{BrowserRouter as Router , Routes, Route,Link} from 'react-router-dom';
+import { Form } from 'reactstrap';
+
 function AdminHospitalManagement() {
   const allHospitals=useSelector((state)=>state.hospitals.value) //state indicates System's state=> state.name given in index.js Main component
 
   return (
       <React.Fragment>
-          {console.log(allHospitals)}
-            <SubHeader subHeaderTopics={["View All Hospitals","ADD Hospital"]}  subSystemName={"Hospital Management"}></SubHeader> 
-
-            <ViewHospitals key={allHospitals} allHospitals={allHospitals}></ViewHospitals>
-
-            <AddHospital></AddHospital>
+            <SubHeader subHeaderTopics={["ViewHospitals","AddHospital"]}  subSystemName={"HospitalManagement"} mainSystem={"ADMINPage"}></SubHeader> 
+             <h3>
+                 Hospital Management Sub System IN Admin Management
+             </h3>
+        
     </React.Fragment>
     )
 }
