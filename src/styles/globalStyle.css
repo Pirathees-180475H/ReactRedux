@@ -9,3 +9,9 @@
     margin-right: 500px;
     margin-bottom: 100px;
 }
+.errorTxt{
+    color: rgb(158, 37, 37);
+}
+.successTxt{
+    color: forestgreen;
+}
