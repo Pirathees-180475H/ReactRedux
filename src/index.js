@@ -10,19 +10,21 @@ import {Provider} from "react-redux";
 
 //Reducers
 import hospitalReducers from "./Features/HospitalsReducers";
+import AuthDonorReducers from './Features/AuthDonorDetailsReducers';
 
 const store=configureStore({   // System All State Handler
   reducer:{              
-    hospitals:hospitalReducers
+    hospitals:hospitalReducers,
+    donorDetails:AuthDonorReducers
   }                    
 })
 
 ReactDOM.render(
-  <React.StrictMode>
+  
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+ ,
   document.getElementById('root')
 );
 
