@@ -5,8 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 //Redux Imports
-import {configureStore} from '@reduxjs/toolkit';
+import {configureStore,getDefaultMiddleware } from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
+
 
 //Reducers
 import hospitalReducers from "./Features/HospitalsReducers";
@@ -16,7 +17,11 @@ const store=configureStore({   // System All State Handler
   reducer:{              
     hospitals:hospitalReducers,
     donorDetails:AuthDonorReducers
-  }                    
+  },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck:false
+  })                   
 })
 
 ReactDOM.render(

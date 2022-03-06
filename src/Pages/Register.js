@@ -2,13 +2,15 @@ import React,{useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Button ,ButtonGroup,FormGroup,Label,Input} from 'reactstrap'
 import { createUserWithEmailAndPassword ,onAuthStateChanged,signOut} from "firebase/auth";
-import { auth } from "../backend/firebaseConfg";
+import { auth,fireStoreDB } from "../backend/firebaseConfg";
+import {collection,getDocs,addDoc} from 'firebase/firestore';
+
 
 function Register() {
 
   let navigate=useNavigate();
 
-  const [userType,setUserType]=useState("Donor");
+  const [userType,setUserType]=useState("donor");
   const [userName,setUserName]=useState("");
   const [password,setPassword]=useState("");
 
@@ -21,6 +23,7 @@ function Register() {
     try{
         const user= await createUserWithEmailAndPassword(auth,registeredEmail,registeredPassword);
         setError(false);
+        createUser(userType);
         setUserName("");setPassword("");
 
     }catch(error){
@@ -28,6 +31,27 @@ function Register() {
        setErrorMessage(error.message);
        signOut(auth)
     }
+}
+//Function To get Collection Because All Users Registered Here
+const donorCollectionRef=collection(fireStoreDB,"donors");
+const hospitalCollectionRef=collection(fireStoreDB,"hospitals");
+const adminCollectionRef=collection(fireStoreDB,"admin");
+//Function To Create User In FireStore;
+const createUser=async(userType)=>{
+      switch(userType){
+        case "donor":{
+            await addDoc(donorCollectionRef,{"email":userName});
+            break;
+        }
+        case "hospital":{
+            await addDoc(hospitalCollectionRef,{"email":userName});
+            break;
+        }
+        case 'admin':{
+          await addDoc(adminCollectionRef,{"email":userName});
+          break;
+        }
+      }
 }
 
 //Like Use Effect ,That Maintain Every time, Like Log Out or Auth Variable Changes
@@ -79,14 +103,14 @@ const logOut=()=>{
          
 
          <ButtonGroup>
-            <Button onClick={()=>{setUserType("Donor")}}>
+            <Button onClick={()=>{setUserType("donor")}}>
               Donor
             </Button >
 
-            <Button onClick={()=>{setUserType("Hospital")}}>
+            <Button onClick={()=>{setUserType("hospital")}}>
               Hospital
             </Button>
-            <Button onClick={()=>{setUserType("Admin")}}>
+            <Button onClick={()=>{setUserType("admin")}}>
               Admin
             </Button>
           </ButtonGroup>

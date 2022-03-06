@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app"; //instantiation
 import {getAuth} from 'firebase/auth'; //Firebase Auth Api
 import {initializeFirestore,getFirestore} from 'firebase/firestore'; //Firebase firestore Api
+import {getStorage} from 'firebase/storage';
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -20,3 +21,5 @@ const app = initializeApp(firebaseConfig);
 export const auth=getAuth(app); // Merge auth functionality to blank firebase app
 
 export const fireStoreDB= getFirestore(app);
+
+export const fireBaseStorage= getStorage(app);
