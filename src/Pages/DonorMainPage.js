@@ -26,7 +26,7 @@ function DonorMainPage() {
         const getData=async()=>{
             const data=await getDocs(donorCollectionRef);
             const donorDetailFromDB= data.docs.map((doc)=>({...doc.data(),id:doc.id})).filter(user=>(user.email===donor.email));
-            dispatch(setDonorDetail(donorDetailFromDB[0])) //set To Redux
+            dispatch(setDonorDetail(donorDetailFromDB[0])) //set To Redux To get In Other Componets
             setDonorDetailsLocal(donorDetailFromDB[0]); //set Directly To Main Donor Page Component
         }
        getData();

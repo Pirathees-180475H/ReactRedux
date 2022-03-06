@@ -1,9 +1,33 @@
-import React from 'react';
+import React,{useState}from 'react';
 import{useDispatch,useSelector}from "react-redux";
 import { Card,CardBody,CardText,CardSubtitle,CardTitle } from 'reactstrap';
+import { fireBaseStorage } from '../../backend/firebaseConfg';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 export default function ProfilePage() {
-const donoruser =useSelector((state)=>state.donorDetails.value)
+const [profilePicURL,setProfilePicUrl]=useState("")
+
+const donoruser =useSelector((state)=>state.donorDetails.value);
+
+const fileHandler=(event)=>{
+    event.preventDefault();
+    const file= event.target[0].files[0];
+    uploadProfileImage(file);
+}
+
+const uploadProfileImage =(file)=>{
+    if(!file) return;
+    const storageRef=ref(fireBaseStorage,`files/${file.name}`)
+    const uploadTask= uploadBytesResumable(storageRef,file);
+
+    uploadTask.on(
+        "state_changed",
+        (snapshot)=>{/*Can Track Progress */ },
+        (err)=>console.log(err),
+        ()=>getDownloadURL(uploadTask.snapshot.ref).then(url=>setProfilePicUrl(url))
+    )
+}
+
   return (
       <React.Fragment>
             <div>
@@ -21,7 +45,7 @@ const donoruser =useSelector((state)=>state.donorDetails.value)
                 </CardBody>
                 <img
                 alt="Card image cap"
-                src="https://picsum.photos/318/180"
+                src={`${profilePicURL}`}
                 width="10%"
                 />
                 <CardBody>
@@ -31,6 +55,10 @@ const donoruser =useSelector((state)=>state.donorDetails.value)
                 </CardBody>
             </Card>
             </div>
+            <form onSubmit={(e)=>fileHandler(e)}>
+                <input type="file" className='input'></input>
+                <button type='submit'>Upload</button>                
+            </form>
       </React.Fragment>
     
 
